@@ -9,32 +9,32 @@ class ResultAsMonad {
     * return :: A -> M A
     * NOTE: null check logic is included.
    */
-  public static inline function toResult<T>(x: T): Result<T> {
-    return if (x == null) None else Sucess(x);
+  public static inline function toResult<T, U>(x: T, failureObj: U): Result<T, U> {
+    return if (x == null) Result.Failure(failureObj) else Result.Success(x);
   }
 
-  public static inline function getOrElse<T>(a: Result<T>, b: T): T {
-    return switch (a) {
-        case Sucess(x): x;
-        case None: b;
+  public static inline function getOrElse<T, U>(x: Result<T, U>, b: T): T {
+    return switch (x) {
+        case Success(a): a;
+        case Failure(_): b;
     }
   }
 
   /**
     * >>= :: MA -> (A -> M B) -> M B
    */
-  public static inline function flatMap<T, U>(x: Result<T>, func: T -> Result<U>): Result<U> {
+  public static inline function flatMap<T, T2, U>(x: Result<T, U>, func: T -> Result<T2, U>): Result<T2, U> {
     return switch (x) {
-      case Sucess(x): func(x);
-      case None: None;
+      case Success(a): func(a);
+      case Failure(b): Failure(b);
     }
   }
 
-  public static inline function map<T, U>(x: Result<T>, func: T -> U): Result<U> {
-    return switch (x) {
-      case Sucess(x): ResultAsMonad.toResult(func(x));
-      case None: None;
-    }
-  }
+  // public static inline function map<T, T2, U>(x: Result<T, U>, func: T -> T2): Result<T2, U> {
+  //   return switch (x) {
+  //     case Success(a): ResultAsMonad.toResult(func(a));
+  //     case Failure(b): Failure(b);
+  //   }
+  // }
 
 }
