@@ -13,6 +13,13 @@ class OptionAsMonad {
     return if (x == null) None else Some(x);
   }
 
+  public static inline function isNone<T>(x: T): Bool {
+    return switch (x) {
+        case Some(x): false;
+        case None: true;
+    }
+ }
+
   public static inline function getOrElse<T>(a: Option<T>, b: T): T {
     return switch (a) {
         case Some(x): x;
@@ -37,4 +44,11 @@ class OptionAsMonad {
     }
   }
 
+
+  /* Helpers for Boolean */
+  public static inline function ifThen<T>(result: Bool, func: Void -> T): Option<T> {
+    return
+      if (result) Some(func())
+      else None;
+  }
 }
