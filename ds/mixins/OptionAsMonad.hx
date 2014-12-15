@@ -27,6 +27,13 @@ class OptionAsMonad {
     }
   }
 
+  public static function exists<T>(x: Option<T>, func: T -> Bool): Bool {
+    return switch (x) {
+      case Some(a): func(a);
+      case None: false;
+    }
+  }
+
   /**
     * >>= :: MA -> (A -> M B) -> M B
    */
