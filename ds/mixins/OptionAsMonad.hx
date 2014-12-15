@@ -20,9 +20,9 @@ class OptionAsMonad {
     }
  }
 
-  public static inline function getOrElse<T>(a: Option<T>, b: T): T {
-    return switch (a) {
-        case Some(x): x;
+  public static inline function getOrElse<T>(x: Option<T>, b: T): T {
+    return switch (x) {
+        case Some(a): a;
         case None: b;
     }
   }
@@ -39,14 +39,14 @@ class OptionAsMonad {
    */
   public static inline function flatMap<T, U>(x: Option<T>, func: T -> Option<U>): Option<U> {
     return switch (x) {
-      case Some(x): func(x);
+      case Some(a): func(a);
       case None:
     }
   }
 
   public static inline function map<T, U>(x: Option<T>, func: T -> U): Option<U> {
     return switch (x) {
-      case Some(x): OptionAsMonad.toOption(func(x));
+      case Some(a): OptionAsMonad.toOption(func(a));
       case None:
     }
   }
