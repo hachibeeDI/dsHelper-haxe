@@ -44,6 +44,13 @@ class OptionAsMonad {
     }
   }
 
+  public static function filter<T>(x: Option<T>, predicate: T -> Bool): Option<T> {
+    return switch (x) {
+      case Some(a): if (predicate(a)) x else None;
+      case None:
+    }
+  }
+
   public static function iter<T>(x: Option<T>, func: T -> Void): Void {
     switch (x) {
       case Some(a): func(a);
