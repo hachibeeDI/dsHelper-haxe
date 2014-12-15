@@ -27,6 +27,13 @@ class OptionAsMonad {
     }
   }
 
+  public static function orElse<T>(x: Option<T>, y: Option<T>): Option<T> {
+    return switch (x) {
+      case Some(_): x;
+      case None: y;
+    }
+  }
+
   public static function exists<T>(x: Option<T>, func: T -> Bool): Bool {
     return switch (x) {
       case Some(a): func(a);
