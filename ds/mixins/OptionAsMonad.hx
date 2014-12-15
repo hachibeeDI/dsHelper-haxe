@@ -33,14 +33,21 @@ class OptionAsMonad {
   public static inline function flatMap<T, U>(x: Option<T>, func: T -> Option<U>): Option<U> {
     return switch (x) {
       case Some(x): func(x);
-      case None: None;
+      case None:
     }
   }
 
   public static inline function map<T, U>(x: Option<T>, func: T -> U): Option<U> {
     return switch (x) {
       case Some(x): OptionAsMonad.toOption(func(x));
-      case None: None;
+      case None:
+    }
+  }
+
+  public static function iter<T>(x: Option<T>, func: T -> Void): Void {
+    switch (x) {
+      case Some(a): func(a);
+      case None:
     }
   }
 
