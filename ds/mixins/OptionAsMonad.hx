@@ -72,6 +72,16 @@ class OptionAsMonad {
     }
   }
 
+  public static function flatten<T>(x: Option<Option<T>>): Option<T> {
+    return getOrElse(x, None);
+  }
+
+  public static function fold<T, U>(x: Option<T>, default_value: U, func: T -> U): U {
+    return switch (x) {
+      case Some(a): func(a);
+      case None: default_value;
+    }
+  }
 
   /* Helpers for Boolean */
   public static inline function ifThen<T>(result: Bool, func: Void -> T): Option<T> {
