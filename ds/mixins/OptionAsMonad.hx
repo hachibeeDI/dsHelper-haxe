@@ -47,21 +47,21 @@ class OptionAsMonad {
   public static inline function flatMap<T, U>(x: Option<T>, func: T -> Option<U>): Option<U> {
     return switch (x) {
       case Some(a): func(a);
-      case None:
+      case None: None;
     }
   }
 
   public static inline function map<T, U>(x: Option<T>, func: T -> U): Option<U> {
     return switch (x) {
       case Some(a): OptionAsMonad.toOption(func(a));
-      case None:
+      case None: None;
     }
   }
 
   public static function filter<T>(x: Option<T>, predicate: T -> Bool): Option<T> {
     return switch (x) {
       case Some(a): if (predicate(a)) x else None;
-      case None:
+      case None: None;
     }
   }
 
